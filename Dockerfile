@@ -1,4 +1,4 @@
-FROM ruby:latest
+FROM ruby:slim
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update
 RUN apt -y full-upgrade
