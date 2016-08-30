@@ -1,4 +1,4 @@
-FROM ruby:latest
+FROM ruby:2.1
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt update
 RUN apt -y full-upgrade
