@@ -1,11 +1,10 @@
 FROM ruby:alpine
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt update
-RUN apt -y full-upgrade
-RUN apt -y install libicu-dev
-RUN adduser --system --disabled-password --uid 3000 --group --home /var/local/app rails
+RUN apk update
+RUN apk upgrade
+RUN apk add icu-dev
+RUN addgroup -g 3000 rails
+RUN adduser -u 3000 -G rails -h /var/local/app -S -D rails
 RUN gem install bundler --no-rdoc --no-ri
-WORKDIR /var/local/app
+WORKDIR /var/local/app/current
 USER rails
-ENV BUNDLE_APP_CONFIG /var/local/app/.bundle
-CMD bundle exec rails server -p 80
+CMD exec bin/rails server
