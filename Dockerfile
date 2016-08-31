@@ -8,4 +8,4 @@ RUN adduser --system --disabled-password --uid 3000 --group --home /var/local/ap
 RUN gem install bundler --no-rdoc --no-ri
 WORKDIR /var/local/app/current
 USER rails
-CMD exec bundle exec rails server
+CMD exec bin/rails server
