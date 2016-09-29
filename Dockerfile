@@ -9,4 +9,4 @@ RUN gem install bundler --no-rdoc --no-ri
 RUN gem install mini_portile2 --no-rdoc --no-ri
 USER rails
 ENV BUNDLE_APP_CONFIG /app/.bundle
-CMD cd /app/current && exec bin/rails server
+CMD cd /app/current && exec bin/rails server -b0
