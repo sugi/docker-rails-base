@@ -14,5 +14,12 @@ if [ "$(id -u rails)" -ne "${APP_UID}" ]; then
   usermod --non-unique --uid "${APP_UID}" rails
 fi
 
+for pidfile in "${APP_CURRENT_DIR}"/tmp/pids/*.pid; do
+  if [ -f "${pidfile}" -a ! -e "/proc/$(< ${pidfile})" ]; then
+    echo "Remove orphaned pidfile: ${pidfile}"
+    rm "${pidfile}"
+  fi
+done
+
 cd "${APP_CURRENT_DIR}"
 exec su -p -s /bin/bash -c "${APP_SERVER_CMD}" rails
