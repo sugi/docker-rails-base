@@ -5,7 +5,7 @@
 : ${APP_GID:=3000}
 : ${APP_SERVER_CMD:=exec bin/rails server -b0}
 
-find "${APP_HOME_DIR}" -xdev -print0 | xargs -r0 chown -h "${RAILS_UID}:${RAILS_GID}"
+find "${APP_HOME_DIR}" -xdev \( -not -uid ${APP_UID} -o -not -gid ${APP_GID} \) -print0 | xargs -r0 chown -h "${APP_UID}:${APP_GID}"
 
 if [ "$(id -g rails)" -ne "${APP_GID}" ]; then
   groupmod --non-unique --gid "${APP_GID}" rails
