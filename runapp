@@ -15,11 +15,13 @@ if [ "$(id -u rails)" -ne "${APP_UID}" ]; then
 fi
 
 for pidfile in "${APP_CURRENT_DIR}"/tmp/pids/*.pid; do
-  if [ -f "${pidfile}" -a ! -e "/proc/$(< ${pidfile})" ]; then
-    echo "Remove orphaned pidfile: ${pidfile}"
-    rm "${pidfile}"
-  fi
+  test -f "${pidfile}" || continue
+  test -e "/proc/$(< ${pidfile})" && continue
+  echo "Remove orphaned pidfile: ${pidfile}"
+  rm "${pidfile}"
 done
+
+export HOME="${APP_HOME_DIR}"
 
 cd "${APP_CURRENT_DIR}"
 exec su -p -s /bin/bash -c "${APP_SERVER_CMD}" rails
